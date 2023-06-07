@@ -1,0 +1,7 @@
+<h1>Randevu Listesi olusmus</h1>
+<h2>Randevu Listesi olusmus</h2>
+<ul>
+    {% for randevu in randevular %}
+        <li>{{ randevu.isim }} - {{ randevu.tarih_saat|date:"F j, Y, P" }}</li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,73 @@
+{% load static %}
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<!-- Your custom CSS -->
+<link rel="stylesheet" href="{% static 'randevu_uygulamasi/css/styles.css' %}">
+
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- Bootstrap JavaScript and jQuery -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<!-- Flatpickr JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<div class="container py-5">
+    <h1 class="mb-5 text-center display-4">Yeni Randevu Oluştur</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <form method="POST" class="form-horizontal">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}" class="col-lg-2 control-label display-4">{{ field.label }}</label>
+                    <div class="col-lg-10">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button class="btn btn-primary btn-lg btn-block">Oluştur</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        flatpickr("#id_tarih_saat", {
+            inline: true,
+            disable: [
+                function(date) {
+                    // return true to disable
+                    return (date.getDay() === 6 || date.getDay() === 0);
+                }
+            ],
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        flatpickr("#id_tarih_saat", {
+            enableTime: true,
+            dateFormat: "Y-m-dTH:i",
+            time_24hr: true,
+            minTime: "09:00",
+            maxTime: "18:00",
+            disable: [
+                function(date) {
+                    return (date.getDay() === 6 || date.getDay() === 0);
+                }
+            ],
+        });
+    });
+</script>
