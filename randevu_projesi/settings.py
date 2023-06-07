@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-xq2-e7djq02$xef106b#gth(^ba0we9-z%(bhef+2^=7^q#4s+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['appointy.herokuapp.com']
+ALLOWED_HOSTS = ['appointy.herokuapp.com','127.0.0.1']
 
 
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -128,6 +129,8 @@ STATIC_URL = '/static/'
 ]"""
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 
 # Default primary key field type
