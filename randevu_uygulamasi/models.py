@@ -9,3 +9,10 @@ class Randevu(models.Model):
 
     def __str__(self):
         return self.isim
+
+
+class BlockedDates(models.Model):
+    date = models.DateField(unique=True)
+
+    def __str__(self):
+        return self.date.strftime('%Y-%m-%d')

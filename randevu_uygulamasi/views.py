@@ -1,8 +1,11 @@
 
+from django.http import JsonResponse
 
 from django.shortcuts import render, redirect
 from .models import Randevu
 from .forms import RandevuForm
+from .models import BlockedDates
+
 
 def randevu_listesi(request):
     randevular = Randevu.objects.all().order_by('tarih_saat')
@@ -49,3 +52,7 @@ def send_appointment_confirmation_email(customer_email, customer_name, appointme
         html_message=message
     )
 
+def blocked_dates(request):
+    dates = BlockedDates.objects.values_list('date', flat=True)
+    date_strings = [date.isoformat() for date in dates]
+    return JsonResponse(date_strings, safe=False)

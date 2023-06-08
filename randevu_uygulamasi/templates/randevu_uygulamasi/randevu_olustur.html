@@ -11,6 +11,7 @@
 
 <!-- Bootstrap JavaScript and jQuery -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <!-- Flatpickr JavaScript -->
@@ -40,23 +41,17 @@
         </div>
     </div>
 </div>
-
+<style>
+    .flatpickr-day.disabled, .flatpickr-day.disabled:hover {
+        background: red !important;
+        cursor: not-allowed;
+    }
+</style>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        flatpickr("#id_tarih_saat", {
-            inline: true,
-            disable: [
-                function(date) {
-                    // return true to disable
-                    return (date.getDay() === 6 || date.getDay() === 0);
-                }
-            ],
-        });
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
+    $.get("{% url 'blocked_dates' %}", function(data) {
+        console.log('Engellenmiş tarihler alındı:', data);
+        var blockedDates = data.map(dateStr => dateStr.split('T')[0]); // Tarihleri string formatında saklayın
+        
         flatpickr("#id_tarih_saat", {
             enableTime: true,
             dateFormat: "Y-m-dTH:i",
@@ -65,9 +60,14 @@
             maxTime: "18:00",
             disable: [
                 function(date) {
-                    return (date.getDay() === 6 || date.getDay() === 0);
+                    // return true to disable
+                    var dateString = date.toISOString().substring(0,10); // Tarihleri string formatında karşılaştırın
+                    return (date.getDay() === 6 || date.getDay() === 0 || blockedDates.includes(dateString));
                 }
             ],
         });
+        console.log('Flatpickr başarıyla başlatıldı');
     });
 </script>
+
+

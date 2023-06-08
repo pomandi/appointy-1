@@ -20,3 +20,9 @@ admin.site.register(User, UserAdmin)
 
 # Randevu modelini kaydedin
 admin.site.register(Randevu, RandevuAdmin)
+
+from .models import BlockedDates
+
+@admin.register(BlockedDates)
+class BlockedDatesAdmin(admin.ModelAdmin):
+    list_display = ('date',)
